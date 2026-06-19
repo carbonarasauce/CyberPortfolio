@@ -1,176 +1,1117 @@
-<!--
-  BEFORE PUBLISHING, replace every bracketed placeholder:
-  [Your Name], [your.email@example.com], [linkedin.com/in/you], [github.com/you],
-  [Honeypot tool], [Ticketing platform], [Year]
-  Also swap the italic "e.g." notes inside each case for what you actually did,
-  and adjust the 15-Day Timeline to match your real schedule.
--->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romil Ganoza — SOC Analyst Portfolio</title>
+<meta name="description" content="SOC Analyst portfolio by Romil Ganoza — 15-day home lab covering Splunk SIEM, Wireshark, Kali Linux honeypot, and incident response.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+:root {
+  /* Color */
+  --ink:        #0D1B2A;
+  --ink-mid:    #1C2E42;
+  --ink-light:  #2A4060;
+  --surface:    #F4F7FA;
+  --surface-2:  #EBF0F6;
+  --white:      #FFFFFF;
+  --text-body:  #2C3E50;
+  --text-muted: #5E7A96;
+  --text-faint: #94A8BE;
+  --blue:       #1D6FE8;
+  --blue-light: rgba(29,111,232,0.10);
+  --blue-border:rgba(29,111,232,0.22);
+  --green:      #0F9D77;
+  --green-light:rgba(15,157,119,0.10);
+  --amber:      #D97706;
+  --amber-light:rgba(217,119,6,0.10);
+  --red:        #DC3545;
+  --red-light:  rgba(220,53,69,0.10);
 
-# 🛡️ [Your Name] — SOC Analyst Portfolio
+  /* Type */
+  --font:  'DM Sans', sans-serif;
+  --mono:  'DM Mono', monospace;
 
-**15-day self-directed training lab:** SIEM threat detection, network forensics, honeypot threat intelligence, and incident response.
+  /* Scale — major third (1.25) */
+  --text-xs:   0.64rem;  /* 10.2px */
+  --text-sm:   0.8rem;   /* 12.8px */
+  --text-base: 1rem;     /* 16px   */
+  --text-lg:   1.25rem;  /* 20px   */
+  --text-xl:   1.563rem; /* 25px   */
+  --text-2xl:  1.953rem; /* 31px   */
+  --text-3xl:  2.441rem; /* 39px   */
+  --text-4xl:  3.052rem; /* 49px   */
 
-![Status](https://img.shields.io/badge/status-open%20to%20work-2FBE9F?style=flat-square)
-![Splunk](https://img.shields.io/badge/SIEM-Splunk-DD9A3D?style=flat-square)
-![Wireshark](https://img.shields.io/badge/Network-Wireshark-1B9CFC?style=flat-square)
-![Kali Linux](https://img.shields.io/badge/Lab-Kali%20Linux-557C94?style=flat-square)
-![License](https://img.shields.io/badge/docs-MIT-8C96A5?style=flat-square)
+  /* Space — 4px grid */
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
 
-> A home lab project built to practice the full lifecycle of a security incident — from raw packet capture to a written report — using the same categories of tooling found in real SOC environments. Built in 15 days as a self-directed program, not a job; treat this as evidence of hands-on initiative going into entry-level SOC / security operations roles.
+  /* Misc */
+  --radius-sm: 6px;
+  --radius:    10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(13,27,42,0.08), 0 1px 2px rgba(13,27,42,0.06);
+  --shadow:    0 4px 16px rgba(13,27,42,0.10), 0 1px 3px rgba(13,27,42,0.06);
+  --shadow-lg: 0 12px 40px rgba(13,27,42,0.14), 0 2px 8px rgba(13,27,42,0.08);
+  --max: 1020px;
+  --transition: 180ms ease;
+}
 
-🔗 **Live site:** `[add your GitHub Pages / hosted link here]`
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--surface);
+  color: var(--text-body);
+  font-family: var(--font);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
 
----
+/* Accessible focus */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
 
-## Table of Contents
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+ul { list-style: none; }
+strong { font-weight: 600; color: var(--ink); }
 
-- [About](#about)
-- [Case Files](#case-files)
-  - [CASE-001 · SIEM Threat Detection & Dashboards](#case-001--siem-threat-detection--dashboard-build)
-  - [CASE-002 · Incident Triage, Ticketing & Reporting](#case-002--incident-triage-ticketing--reporting)
-  - [CASE-003 · Network Traffic & Packet Analysis](#case-003--network-traffic--packet-analysis)
-  - [CASE-004 · Honeypot Deployment & Threat Intelligence](#case-004--honeypot-deployment--threat-intelligence)
-- [15-Day Program Timeline](#15-day-program-timeline)
-- [Skill Set](#skill-set)
-- [Repo Structure](#repo-structure)
-- [Contact](#contact)
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--sp-6); }
 
----
+/* ═══════════════════════════════════════════
+   SKIP LINK — accessibility first
+═══════════════════════════════════════════ */
+.skip-link {
+  position: absolute; top: -100%; left: var(--sp-4);
+  background: var(--blue); color: #fff; padding: var(--sp-2) var(--sp-4);
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-size: var(--text-sm); font-weight: 600; z-index: 9999;
+  transition: top var(--transition);
+}
+.skip-link:focus { top: 0; }
 
-## About
+/* ═══════════════════════════════════════════
+   SCROLL PROGRESS BAR
+═══════════════════════════════════════════ */
+.progress-bar {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--surface-2); z-index: 200;
+}
+.progress-fill {
+  height: 100%; width: 0%; background: var(--blue);
+  transition: width 0.1s linear;
+}
 
-I'm **[Your Name]**, an aspiring SOC Analyst building hands-on detection and response skills outside the classroom. [Add 2–3 sentences: your background before this lab, what drew you to security, and the type of role you're targeting.]
+/* ═══════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════ */
+.nav {
+  position: sticky; top: 3px; z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--surface-2);
+  box-shadow: var(--shadow-sm);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--sp-4) var(--sp-6); max-width: var(--max); margin: 0 auto;
+  gap: var(--sp-4);
+}
+.nav-brand { display: flex; align-items: center; gap: var(--sp-3); flex-shrink: 0; }
+.nav-brand-name {
+  font-size: var(--text-base); font-weight: 700; color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.nav-brand-role {
+  font-size: var(--text-xs); font-weight: 500; color: var(--text-muted);
+  letter-spacing: 0.01em; display: none;
+}
+@media (min-width: 500px) { .nav-brand-role { display: inline; } }
 
-**Lab stack:** Splunk Enterprise · BOTSv2 Dataset · Wireshark · Kali Linux · [Honeypot tool] · [Ticketing platform]
+.nav-links {
+  display: flex; align-items: center; gap: var(--sp-1);
+}
+.nav-links a {
+  font-size: var(--text-sm); font-weight: 500; color: var(--text-muted);
+  padding: var(--sp-2) var(--sp-3); border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+  white-space: nowrap;
+}
+.nav-links a:hover { color: var(--ink); background: var(--surface); }
+.nav-links a.active { color: var(--blue); background: var(--blue-light); }
+.nav-cta-btn {
+  background: var(--blue) !important; color: #fff !important;
+  padding: var(--sp-2) var(--sp-4) !important; border-radius: var(--radius-sm) !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 4px rgba(29,111,232,0.3);
+}
+.nav-cta-btn:hover { background: #155dcc !important; color: #fff !important; }
 
----
+/* Hide middle links on small screens */
+.nav-hide-sm { display: none; }
+@media (min-width: 600px) { .nav-hide-sm { display: inline; } }
 
-## Case Files
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+.hero {
+  background: var(--white);
+  border-bottom: 1px solid var(--surface-2);
+  padding: var(--sp-24) 0 var(--sp-20);
+}
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-16); align-items: center; }
+@media (max-width: 720px) { .hero-inner { grid-template-columns: 1fr; gap: var(--sp-12); } }
 
-Each case below mirrors a real SOC workflow stage — detection, response, network forensics, and adversary intelligence — and links to the supporting evidence folder in this repo.
+/* Left: text */
+.hero-tag {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  background: var(--blue-light); border: 1px solid var(--blue-border);
+  color: var(--blue); font-size: var(--text-xs); font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 5px var(--sp-3); border-radius: 20px; margin-bottom: var(--sp-5);
+}
+.hero-tag .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--green);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-### CASE-001 · SIEM Threat Detection & Dashboard Build
-`Detection & Monitoring` · `Splunk Enterprise` · `BOTSv2 Dataset` · `SPL` · **Status: Documented**
+.hero h1 {
+  font-size: clamp(var(--text-2xl), 4.5vw, var(--text-4xl));
+  font-weight: 700; line-height: 1.12; letter-spacing: -0.035em;
+  color: var(--ink); margin-bottom: var(--sp-5);
+}
+.hero h1 .highlight { color: var(--blue); }
 
-**Objective:** Stand up a working SIEM environment and turn raw security logs into actionable visual monitoring, using "Boss of the SOC" v2 — an industry-standard dataset simulating a real breach against a fictional company.
+.hero-sub {
+  font-size: var(--text-lg); color: var(--text-muted);
+  line-height: 1.6; margin-bottom: var(--sp-8); max-width: 460px;
+  font-weight: 300;
+}
 
-**What I did:**
-- Ingested and explored the BOTSv2 dataset in Splunk, learning its index and sourcetype structure before writing any searches.
-- Wrote SPL queries to surface indicators of compromise — *[e.g., suspicious authentication activity, anomalous process execution, unusual DNS query patterns — swap in what you actually focused on]*.
-- Designed and built Splunk dashboards from scratch: panels, visualizations, and time-range controls for a fast read on environment health.
-- Rehearsed the dashboard as a live demo, practicing how to walk a non-technical audience through what each panel means.
+/* Primary + secondary CTAs side by side — clear action hierarchy */
+.hero-actions { display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  background: var(--blue); color: #fff; font-size: var(--text-base);
+  font-weight: 600; padding: 14px var(--sp-6); border-radius: var(--radius);
+  box-shadow: 0 2px 8px rgba(29,111,232,0.35);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+}
+.btn-primary:hover { background: #155dcc; transform: translateY(-1px); box-shadow: 0 4px 14px rgba(29,111,232,0.4); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  color: var(--text-muted); font-size: var(--text-base); font-weight: 500;
+  padding: 14px var(--sp-5); border-radius: var(--radius);
+  border: 1px solid var(--surface-2);
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+.btn-secondary:hover { color: var(--ink); border-color: var(--text-faint); background: var(--surface); }
 
-**Skills demonstrated:** SPL query writing · log correlation · dashboard design · technical presenting
+/* Right: stats card */
+.hero-stats-card {
+  background: var(--surface);
+  border: 1px solid var(--surface-2);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-6);
+  box-shadow: var(--shadow);
+}
+.hero-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-bottom: var(--sp-5); }
+.hero-stat {
+  background: var(--white); border: 1px solid var(--surface-2);
+  border-radius: var(--radius); padding: var(--sp-4) var(--sp-5);
+  box-shadow: var(--shadow-sm);
+}
+.hero-stat-num {
+  font-size: var(--text-2xl); font-weight: 700; color: var(--ink);
+  letter-spacing: -0.04em; line-height: 1; margin-bottom: var(--sp-1);
+}
+.hero-stat-label { font-size: var(--text-xs); color: var(--text-muted); font-weight: 500; letter-spacing: 0.02em; }
 
-📁 Evidence: [`/01-splunk-siem-monitoring`](./01-splunk-siem-monitoring) — SPL queries, dashboard exports, screenshots
+/* Case links inside hero card */
+.hero-case-links { display: flex; flex-direction: column; gap: var(--sp-2); }
+.hero-case-link {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3);
+  background: var(--white); border: 1px solid var(--surface-2); border-radius: var(--radius-sm);
+  padding: var(--sp-3) var(--sp-4);
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+  cursor: pointer;
+}
+.hero-case-link:hover { border-color: var(--blue-border); box-shadow: var(--shadow-sm); transform: translateX(3px); }
+.hcl-left { display: flex; align-items: center; gap: var(--sp-3); min-width: 0; }
+.hcl-icon {
+  width: 32px; height: 32px; border-radius: 7px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+}
+.hcl-text { min-width: 0; }
+.hcl-id { font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); letter-spacing: 0.05em; }
+.hcl-title { font-size: var(--text-sm); font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hcl-arrow { color: var(--text-faint); font-size: var(--text-sm); flex-shrink: 0; transition: color var(--transition); }
+.hero-case-link:hover .hcl-arrow { color: var(--blue); }
 
----
+/* ═══════════════════════════════════════════
+   SECTION BASE
+═══════════════════════════════════════════ */
+.section { padding: var(--sp-20) 0; border-bottom: 1px solid var(--surface-2); }
+.section-white { background: var(--white); }
+.section-surface { background: var(--surface); }
 
-### CASE-002 · Incident Triage, Ticketing & Reporting
-`Incident Response` · `[Ticketing platform]` · **Status: Documented**
+.section-label {
+  font-family: var(--mono); font-size: var(--text-xs); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue);
+  display: block; margin-bottom: var(--sp-3);
+}
+.section-heading {
+  font-size: clamp(var(--text-xl), 3vw, var(--text-3xl));
+  font-weight: 700; letter-spacing: -0.03em; color: var(--ink);
+  margin-bottom: var(--sp-3); line-height: 1.15;
+}
+.section-sub {
+  font-size: var(--text-base); color: var(--text-muted);
+  max-width: 520px; line-height: 1.65; margin-bottom: var(--sp-10);
+}
 
-**Objective:** Practice the part of SOC work that happens after detection — deciding what matters, tracking it, and writing it up the way a real analyst hands a case off to the next shift.
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+.about-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: var(--sp-16); align-items: start; }
+@media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; gap: var(--sp-8); } }
 
-**What I did:**
-- Logged alerts and findings from the Splunk dashboard work as tickets, rather than leaving them as one-off searches.
-- Practiced triage: assigning priority and severity based on *[e.g., asset criticality, likelihood, potential business impact]* instead of treating every alert the same.
-- Wrote structured incident reports for higher-priority cases — summary, timeline, indicators of compromise, and recommended remediation.
-- Treated documentation as a deliverable in itself.
+.about-text p {
+  color: var(--text-muted); margin-bottom: var(--sp-4);
+  font-size: var(--text-base); line-height: 1.7;
+}
+.about-text p:last-child { margin-bottom: 0; }
 
-**Skills demonstrated:** alert triage · prioritization · ticketing workflows · incident report writing
+/* Callout — makes the placeholder copy visible to Romil */
+.about-callout {
+  background: var(--amber-light); border-left: 3px solid var(--amber);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: var(--sp-4) var(--sp-5); margin-top: var(--sp-4);
+  font-size: var(--text-sm); color: var(--text-body); line-height: 1.6;
+}
+.about-callout strong { color: var(--amber); font-family: var(--mono); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: var(--sp-2); }
 
-📁 Evidence: [`/02-incident-response`](./02-incident-response) — report template and example tickets
+.info-card {
+  background: var(--white); border: 1px solid var(--surface-2);
+  border-radius: var(--radius-lg); padding: var(--sp-5);
+  box-shadow: var(--shadow-sm);
+}
+.info-card + .info-card { margin-top: var(--sp-4); }
+.info-card-title {
+  font-size: var(--text-xs); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--text-faint); margin-bottom: var(--sp-4);
+}
+.info-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding: var(--sp-3) 0; border-bottom: 1px solid var(--surface-2);
+  gap: var(--sp-4);
+}
+.info-row:last-child { border-bottom: none; padding-bottom: 0; }
+.info-row-label { font-size: var(--text-sm); color: var(--text-muted); }
+.info-row-val { font-size: var(--text-sm); font-weight: 500; color: var(--ink); text-align: right; }
+.status-open { color: var(--green); display: flex; align-items: center; gap: var(--sp-1); }
+.status-open::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); display: inline-block; animation: pulse 2s ease-in-out infinite; }
 
----
+.tag-wrap { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.tag {
+  font-family: var(--mono); font-size: var(--text-xs); color: var(--text-muted);
+  background: var(--surface); border: 1px solid var(--surface-2);
+  border-radius: 20px; padding: 4px 11px; white-space: nowrap;
+}
 
-### CASE-003 · Network Traffic & Packet Analysis
-`Network Forensics` · `Wireshark` · **Status: Documented**
+/* ═══════════════════════════════════════════
+   CASES
+   UX: progressive disclosure — summary visible,
+   details expandable so the page isn't a wall.
+═══════════════════════════════════════════ */
+.case-grid { display: flex; flex-direction: column; gap: var(--sp-5); }
 
-**Objective:** Build the habit of reading raw network traffic instead of trusting summaries.
+.case-card {
+  background: var(--white); border: 1px solid var(--surface-2);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.45s ease, transform 0.45s ease, box-shadow var(--transition), border-color var(--transition);
+}
+.case-card.visible { opacity: 1; transform: translateY(0); }
+.case-card:hover { box-shadow: var(--shadow); border-color: var(--text-faint); }
 
-**What I did:**
-- Captured and analyzed live and saved traffic in Wireshark, reading the protocol hierarchy before drilling into individual frames.
-- Used display filters to isolate specific conversations and suspicious patterns — *[e.g., unexpected ports, plaintext credentials, repeated connection attempts]*.
-- Followed TCP streams end-to-end to reconstruct what happened in a session.
-- Compared baseline "normal" traffic against anomalous captures.
+/* Left accent bar encodes the discipline color */
+.case-inner { display: grid; grid-template-columns: 4px 1fr; }
+.case-bar { border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+.bar-blue  { background: var(--blue); }
+.bar-green { background: var(--green); }
+.bar-amber { background: var(--amber); }
+.bar-red   { background: var(--red); }
 
-**Skills demonstrated:** packet analysis · Wireshark filters · traffic baselining · anomaly identification
+.case-body { padding: var(--sp-6); }
 
-📁 Evidence: [`/03-wireshark-traffic-analysis`](./03-wireshark-traffic-analysis) — capture notes and filter examples
+/* Summary row — always visible */
+.case-summary {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--sp-4); cursor: pointer; /* clickable to expand */
+  list-style: none; /* remove <summary> triangle */
+}
+.case-summary::-webkit-details-marker { display: none; }
+.case-summary::marker { display: none; }
 
----
+.case-left { min-width: 0; flex: 1; }
+.case-meta { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; margin-bottom: var(--sp-3); }
+.case-id { font-family: var(--mono); font-size: var(--text-xs); color: var(--text-faint); letter-spacing: 0.06em; }
+.case-badge {
+  font-size: var(--text-xs); font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.07em; padding: 3px 10px; border-radius: 20px; border: 1px solid;
+}
+.badge-blue  { color: var(--blue);  border-color: var(--blue-border);            background: var(--blue-light); }
+.badge-green { color: var(--green); border-color: rgba(15,157,119,0.25);          background: var(--green-light); }
+.badge-amber { color: var(--amber); border-color: rgba(217,119,6,0.25);           background: var(--amber-light); }
+.badge-red   { color: var(--red);   border-color: rgba(220,53,69,0.2);            background: var(--red-light); }
 
-### CASE-004 · Honeypot Deployment & Threat Intelligence
-`Adversary Intelligence` · `Kali Linux` · `[Honeypot tool]` · **Status: Documented**
+.case-card h3 {
+  font-size: var(--text-lg); font-weight: 700; color: var(--ink);
+  letter-spacing: -0.02em; margin-bottom: var(--sp-2); line-height: 1.25;
+}
+.case-desc { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.6; max-width: 560px; }
 
-**Objective:** Get a firsthand look at what automated attackers actually do, by giving them something to attack inside a safely isolated home lab.
+/* Expand toggle — communicates there's more */
+.case-toggle {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-size: var(--text-xs); font-weight: 600; color: var(--blue);
+  background: var(--blue-light); border: 1px solid var(--blue-border);
+  padding: var(--sp-2) var(--sp-3); border-radius: var(--radius-sm);
+  white-space: nowrap; flex-shrink: 0; align-self: flex-start;
+  margin-top: var(--sp-2); cursor: pointer;
+  transition: background var(--transition);
+  font-family: var(--font); /* reset details/summary style */
+}
+.case-toggle:hover { background: rgba(29,111,232,0.18); }
+.toggle-icon { transition: transform 0.25s ease; display: inline-block; }
+details[open] .toggle-icon { transform: rotate(180deg); }
 
-**What I did:**
-- Built and isolated a home lab network segment so the honeypot could be exposed without putting other devices at risk.
-- Deployed a honeypot on Kali Linux to passively log connection attempts, credentials tried, and commands run.
-- Reviewed the resulting logs for patterns — common usernames/passwords attempted, scanning behavior, follow-on actions.
-- Cross-referenced honeypot activity with Wireshark captures of the same traffic.
+/* Expanded content */
+.case-details-body {
+  margin-top: var(--sp-5);
+  border-top: 1px solid var(--surface-2);
+  padding-top: var(--sp-5);
+}
 
-**Skills demonstrated:** honeypot configuration · network segmentation · log analysis · attacker TTP identification
+.case-section-label {
+  font-family: var(--mono); font-size: var(--text-xs); font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-faint);
+  margin-bottom: var(--sp-3); display: block;
+}
 
-📁 Evidence: [`/04-kali-honeypot-homelab`](./04-kali-honeypot-homelab) — network diagram and log analysis notes
+.tools-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-bottom: var(--sp-5); }
+.tool-tag {
+  font-family: var(--mono); font-size: var(--text-xs); color: var(--text-muted);
+  background: var(--surface); border: 1px solid var(--surface-2);
+  border-radius: var(--radius-sm); padding: 4px 10px;
+}
 
----
+/* Findings in a 2-column grid */
+.findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-bottom: var(--sp-5); }
+@media (max-width: 560px) { .findings-grid { grid-template-columns: 1fr; } }
+.finding {
+  display: flex; gap: var(--sp-3); align-items: flex-start;
+  background: var(--surface); border-radius: var(--radius-sm); padding: var(--sp-3) var(--sp-4);
+}
+.finding-icon { font-size: 0.9rem; flex-shrink: 0; margin-top: 1px; }
+.finding p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.55; }
 
-## 15-Day Program Timeline
+/* Skills earned */
+.skills-row { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.skill-chip {
+  font-size: var(--text-xs); font-weight: 500;
+  padding: 5px 12px; border-radius: 20px;
+  border: 1px solid var(--blue-border); color: var(--blue); background: var(--blue-light);
+}
 
-*(General structure shown below — edit day ranges/phases to match your real schedule.)*
+/* ═══════════════════════════════════════════
+   TIMELINE
+═══════════════════════════════════════════ */
+.timeline-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+@media (max-width: 640px) { .timeline-wrap { grid-template-columns: 1fr; } }
 
-| Days | Phase | Focus |
-|------|-------|-------|
-| 1–2 | Foundations | Cybersecurity awareness, threat landscape, lab environment setup |
-| 3–6 | SIEM Monitoring | Splunk setup, BOTSv2 ingestion, SPL practice, dashboard build, live demo |
-| 7–9 | Network Forensics | Wireshark capture/filter practice, baseline vs. anomaly comparison |
-| 10–12 | Adversary Lab | Kali Linux honeypot deployment, network isolation, log collection |
-| 13–14 | Incident Response | Ticketing workflow, triage practice, incident report writing |
-| 15 | Wrap-Up | Portfolio documentation, demo rehearsal, lessons learned |
+.tl-card {
+  background: var(--white); border: 1px solid var(--surface-2); border-radius: var(--radius);
+  padding: var(--sp-5); display: flex; gap: var(--sp-4); align-items: flex-start;
+  box-shadow: var(--shadow-sm);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.tl-card.visible { opacity: 1; transform: translateY(0); }
+.tl-step {
+  font-family: var(--mono); font-size: var(--text-xs); color: var(--white);
+  background: var(--blue); width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 500; flex-shrink: 0;
+}
+.tl-content {}
+.tl-day { font-family: var(--mono); font-size: var(--text-xs); color: var(--blue); letter-spacing: 0.06em; margin-bottom: var(--sp-1); }
+.tl-card h4 { font-size: var(--text-base); font-weight: 700; color: var(--ink); margin-bottom: var(--sp-1); }
+.tl-card p { font-size: var(--text-sm); color: var(--text-muted); line-height: 1.55; }
 
-## Skill Set
+/* ═══════════════════════════════════════════
+   SKILLS
+═══════════════════════════════════════════ */
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-5); }
+@media (max-width: 620px) { .skills-grid { grid-template-columns: 1fr; } }
 
-| Category | Skills |
-|---|---|
-| Detection & Monitoring | Splunk, SPL, dashboard design, log correlation |
-| Network Forensics | Wireshark, protocol analysis, PCAP review, TCP stream reconstruction |
-| Lab & Linux Ops | Kali Linux, honeypot deployment, network segmentation, Linux CLI |
-| IR & Communication | Triage, ticketing, incident reports, stakeholder demos |
+.skill-card {
+  background: var(--white); border: 1px solid var(--surface-2);
+  border-radius: var(--radius-lg); padding: var(--sp-6);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.skill-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
+.skill-card-icon {
+  width: 44px; height: 44px; border-radius: var(--radius); margin-bottom: var(--sp-4);
+  display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+}
+.skill-card h4 { font-size: var(--text-base); font-weight: 700; color: var(--ink); margin-bottom: var(--sp-4); }
 
-## Repo Structure
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+.contact-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--sp-12); align-items: start; }
+@media (max-width: 700px) { .contact-grid { grid-template-columns: 1fr; gap: var(--sp-8); } }
 
-```
-soc-analyst-portfolio/
-├── README.md
-├── 01-splunk-siem-monitoring/
-│   ├── README.md              # write-up of approach + findings
-│   ├── spl-queries.md         # your actual SPL queries, commented
-│   └── screenshots/           # dashboard panels, search results
-├── 02-incident-response/
-│   ├── README.md
-│   ├── incident-report-template.md
-│   └── sample-tickets.md
-├── 03-wireshark-traffic-analysis/
-│   ├── README.md
-│   ├── pcap-findings.md       # filters used + what they revealed
-│   └── screenshots/
-├── 04-kali-honeypot-homelab/
-│   ├── README.md
-│   ├── network-diagram.png    # how the lab was isolated
-│   └── attack-log-analysis.md
-└── assets/
-    └── screenshots/
-```
+.contact-copy h3 { font-size: var(--text-xl); font-weight: 700; color: var(--ink); letter-spacing: -0.02em; margin-bottom: var(--sp-4); }
+.contact-copy p { color: var(--text-muted); font-size: var(--text-base); line-height: 1.7; margin-bottom: var(--sp-4); }
+.open-pill {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  background: var(--green-light); border: 1px solid rgba(15,157,119,0.25);
+  color: var(--green); font-size: var(--text-sm); font-weight: 600;
+  padding: var(--sp-2) var(--sp-4); border-radius: 20px; margin-top: var(--sp-2);
+}
+.open-pill::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 2s ease-in-out infinite; }
 
-> Tip for recruiters skimming GitHub: keep real screenshots (dashboard panels, Wireshark captures, honeypot logs) inside each folder — visual proof of hands-on work matters more than extra prose.
+.contact-card {
+  background: var(--white); border: 1px solid var(--surface-2);
+  border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.contact-card-header {
+  background: var(--ink); padding: var(--sp-5) var(--sp-6);
+}
+.contact-card-header p {
+  font-size: var(--text-sm); color: rgba(255,255,255,0.55);
+}
+.contact-card-header strong { color: #fff; font-size: var(--text-base); display: block; margin-bottom: 2px; }
 
-## Contact
+.contact-rows { padding: var(--sp-3) 0; }
+.contact-row {
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-6); border-bottom: 1px solid var(--surface-2);
+  transition: background var(--transition);
+}
+.contact-row:last-child { border-bottom: none; }
+.contact-row:hover { background: var(--surface); }
+.contact-row-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.contact-row-text {}
+.contact-row-label { font-size: var(--text-xs); color: var(--text-faint); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.07em; }
+.contact-row-val { font-size: var(--text-sm); font-weight: 500; color: var(--ink); }
+.contact-row-val a { color: var(--blue); }
+.contact-row-val a:hover { text-decoration: underline; }
 
-- **Email:** [your.email@example.com]
-- **LinkedIn:** [linkedin.com/in/you]
-- **GitHub:** [github.com/you]
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+.footer {
+  background: var(--ink); padding: var(--sp-8) 0;
+  text-align: center;
+}
+.footer-inner { display: flex; flex-direction: column; align-items: center; gap: var(--sp-4); }
+.footer-name { font-size: var(--text-base); font-weight: 700; color: #fff; letter-spacing: -0.02em; }
+.footer-copy { font-size: var(--text-xs); color: rgba(255,255,255,0.35); font-family: var(--mono); }
+.footer-links { display: flex; gap: var(--sp-5); }
+.footer-links a { font-size: var(--text-sm); color: rgba(255,255,255,0.45); transition: color var(--transition); }
+.footer-links a:hover { color: rgba(255,255,255,0.85); }
 
----
-*Built as part of a 15-day self-directed SOC training lab. © [Year] [Your Name].*
+/* Back to top */
+.back-top {
+  position: fixed; bottom: var(--sp-6); right: var(--sp-6);
+  background: var(--white); border: 1px solid var(--surface-2);
+  color: var(--text-muted); width: 42px; height: 42px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; box-shadow: var(--shadow);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease, transform var(--transition), color var(--transition);
+  z-index: 50;
+}
+.back-top.show { opacity: 1; pointer-events: auto; }
+.back-top:hover { color: var(--blue); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+
+<!-- Skip to main content — screen reader / keyboard UX -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- Reading progress -->
+<div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progress"></div></div>
+
+<!-- ── NAV ── -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <span class="nav-brand-name">Romil Ganoza</span>
+      <span class="nav-brand-role">SOC Analyst Portfolio</span>
+    </div>
+    <ul class="nav-links" role="list">
+      <li><a href="#about"    class="nav-hide-sm" data-nav>About</a></li>
+      <li><a href="#cases"    class="nav-hide-sm" data-nav>Cases</a></li>
+      <li><a href="#skills"   class="nav-hide-sm" data-nav>Skills</a></li>
+      <li><a href="#contact"  class="nav-cta-btn" data-nav>Contact Me</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="hero-inner">
+
+      <!-- LEFT: Identity + CTA -->
+      <div>
+        <div class="hero-tag"><span class="dot"></span> Available for work &nbsp;·&nbsp; Mactan, Cebu 🇵🇭</div>
+        <h1>
+          Aspiring <span class="highlight">SOC Analyst</span><br>
+          with proven lab skills.
+        </h1>
+        <p class="hero-sub">
+          I'm Romil Ganoza. I spent 15 days building a home lab to learn the full SOC analyst workflow — detection, forensics, response, and threat intel — using the same tools found in real security operations.
+        </p>
+        <div class="hero-actions">
+          <a class="btn-primary" href="#cases">View My Cases ↓</a>
+          <a class="btn-secondary" href="#contact">Get in Touch</a>
+        </div>
+      </div>
+
+      <!-- RIGHT: At-a-glance stats + case shortcuts -->
+      <div>
+        <div class="hero-stats-card">
+          <div class="hero-stat-grid">
+            <div class="hero-stat">
+              <div class="hero-stat-num">15</div>
+              <div class="hero-stat-label">Day program</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">4</div>
+              <div class="hero-stat-label">Cases logged</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num">4</div>
+              <div class="hero-stat-label">SOC tools used</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-num" style="color:var(--green); font-size:var(--text-xl)">Open</div>
+              <div class="hero-stat-label">Job status</div>
+            </div>
+          </div>
+
+          <div class="hero-case-links">
+            <a class="hero-case-link" href="#case-001">
+              <div class="hcl-left">
+                <div class="hcl-icon" style="background:var(--blue-light)">📊</div>
+                <div class="hcl-text">
+                  <div class="hcl-id">CASE-001</div>
+                  <div class="hcl-title">SIEM Threat Detection</div>
+                </div>
+              </div>
+              <span class="hcl-arrow">›</span>
+            </a>
+            <a class="hero-case-link" href="#case-002">
+              <div class="hcl-left">
+                <div class="hcl-icon" style="background:var(--green-light)">🎫</div>
+                <div class="hcl-text">
+                  <div class="hcl-id">CASE-002</div>
+                  <div class="hcl-title">Incident Triage & Reporting</div>
+                </div>
+              </div>
+              <span class="hcl-arrow">›</span>
+            </a>
+            <a class="hero-case-link" href="#case-003">
+              <div class="hcl-left">
+                <div class="hcl-icon" style="background:var(--amber-light)">🔬</div>
+                <div class="hcl-text">
+                  <div class="hcl-id">CASE-003</div>
+                  <div class="hcl-title">Wireshark Traffic Analysis</div>
+                </div>
+              </div>
+              <span class="hcl-arrow">›</span>
+            </a>
+            <a class="hero-case-link" href="#case-004">
+              <div class="hcl-left">
+                <div class="hcl-icon" style="background:var(--red-light)">🍯</div>
+                <div class="hcl-text">
+                  <div class="hcl-id">CASE-004</div>
+                  <div class="hcl-title">Kali Linux Honeypot Lab</div>
+                </div>
+              </div>
+              <span class="hcl-arrow">›</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ── ABOUT ── -->
+<section class="section section-surface" id="about">
+  <div class="wrap">
+    <span class="section-label">About Me</span>
+    <h2 class="section-heading">Why I built this lab</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm <strong>Romil Ganoza</strong>, a recent BS Industrial Technology graduate from Lapu-Lapu City College, based in Mactan, Cebu, Philippines. I'm actively pursuing entry-level IT Support and SOC Analyst roles where I can apply hands-on technical skills from day one.</p>
+        <p>This 15-day home lab was my way of going beyond classroom knowledge. Instead of just reading about threat detection, I set up real environments, captured real traffic, and wrote real incident reports — the same workflow a working SOC analyst follows every shift.</p>
+        <div class="about-callout">
+          <strong>✏️ Add your story here</strong>
+          Replace this with 1–2 sentences about what drew you to security specifically, or what kind of team you're hoping to join — e.g., an MSSP, internal SOC, or enterprise environment.
+        </div>
+      </div>
+      <div>
+        <div class="info-card">
+          <div class="info-card-title">Quick Facts</div>
+          <div class="info-row"><span class="info-row-label">Program length</span><span class="info-row-val">15 days</span></div>
+          <div class="info-row"><span class="info-row-label">Cases completed</span><span class="info-row-val">4 of 4</span></div>
+          <div class="info-row"><span class="info-row-label">Location</span><span class="info-row-val">Mactan, Cebu 🇵🇭</span></div>
+          <div class="info-row"><span class="info-row-label">Status</span><span class="info-row-val status-open">Open to work</span></div>
+        </div>
+        <div class="info-card" style="margin-top:var(--sp-4)">
+          <div class="info-card-title">Lab Stack</div>
+          <div class="tag-wrap">
+            <span class="tag">Splunk Enterprise</span>
+            <span class="tag">BOTSv2 Dataset</span>
+            <span class="tag">Wireshark</span>
+            <span class="tag">Kali Linux</span>
+            <span class="tag">[Honeypot tool]</span>
+            <span class="tag">[Ticketing platform]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CASES ── -->
+<section class="section section-white" id="cases">
+  <div class="wrap">
+    <span class="section-label">04 Cases</span>
+    <h2 class="section-heading">Investigation Case Files</h2>
+    <p class="section-sub">Each case covers a different SOC discipline. Click <strong>See Details</strong> on any case to read exactly what I did and what I learned.</p>
+
+    <div class="case-grid">
+
+      <!-- CASE 001 -->
+      <article class="case-card" id="case-001">
+        <div class="case-inner">
+          <div class="case-bar bar-blue"></div>
+          <div class="case-body">
+            <details>
+              <summary class="case-summary">
+                <div class="case-left">
+                  <div class="case-meta">
+                    <span class="case-id">CASE-001</span>
+                    <span class="case-badge badge-blue">Detection &amp; Monitoring</span>
+                  </div>
+                  <h3>SIEM Threat Detection &amp; Dashboard Build</h3>
+                  <p class="case-desc">Set up a Splunk SIEM, ingested the industry-standard BOTSv2 breach dataset, wrote detection queries, and built dashboards that give an analyst a fast read on environment health.</p>
+                </div>
+                <span class="case-toggle">See Details <span class="toggle-icon">▾</span></span>
+              </summary>
+              <div class="case-details-body">
+                <span class="case-section-label">Tools Used</span>
+                <div class="tools-row">
+                  <span class="tool-tag">Splunk Enterprise</span>
+                  <span class="tool-tag">BOTSv2 Dataset</span>
+                  <span class="tool-tag">SPL</span>
+                  <span class="tool-tag">Dashboard Design</span>
+                </div>
+                <span class="case-section-label">What I Did</span>
+                <div class="findings-grid">
+                  <div class="finding"><div class="finding-icon">📥</div><p>Ingested and explored BOTSv2, learning its index and sourcetype structure before writing any searches.</p></div>
+                  <div class="finding"><div class="finding-icon">🔍</div><p>Wrote SPL queries to surface indicators of compromise — suspicious auth, anomalous processes, unusual DNS patterns.</p></div>
+                  <div class="finding"><div class="finding-icon">📊</div><p>Built dashboards from scratch with panels, visualizations, and time-range controls for at-a-glance health reads.</p></div>
+                  <div class="finding"><div class="finding-icon">🎤</div><p>Rehearsed the dashboard as a live demo, practicing how to walk non-technical stakeholders through the findings.</p></div>
+                </div>
+                <span class="case-section-label">Skills Demonstrated</span>
+                <div class="skills-row">
+                  <span class="skill-chip">SPL Query Writing</span>
+                  <span class="skill-chip">Log Correlation</span>
+                  <span class="skill-chip">Dashboard Design</span>
+                  <span class="skill-chip">Technical Presenting</span>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 002 -->
+      <article class="case-card" id="case-002">
+        <div class="case-inner">
+          <div class="case-bar bar-green"></div>
+          <div class="case-body">
+            <details>
+              <summary class="case-summary">
+                <div class="case-left">
+                  <div class="case-meta">
+                    <span class="case-id">CASE-002</span>
+                    <span class="case-badge badge-green">Incident Response</span>
+                  </div>
+                  <h3>Incident Triage, Ticketing &amp; Reporting</h3>
+                  <p class="case-desc">Practiced the work that happens after detection — deciding what matters, tracking it in a ticketing system, and writing it up so the next analyst can pick up the case without losing context.</p>
+                </div>
+                <span class="case-toggle">See Details <span class="toggle-icon">▾</span></span>
+              </summary>
+              <div class="case-details-body">
+                <span class="case-section-label">Tools Used</span>
+                <div class="tools-row">
+                  <span class="tool-tag">[Ticketing platform]</span>
+                  <span class="tool-tag">Incident Report Writing</span>
+                  <span class="tool-tag">Triage Workflows</span>
+                </div>
+                <span class="case-section-label">What I Did</span>
+                <div class="findings-grid">
+                  <div class="finding"><div class="finding-icon">🎫</div><p>Logged alerts and findings from Splunk work as tickets, rather than leaving them as one-off searches.</p></div>
+                  <div class="finding"><div class="finding-icon">⚖️</div><p>Practiced triage: assigning priority and severity based on asset criticality and potential business impact.</p></div>
+                  <div class="finding"><div class="finding-icon">📝</div><p>Wrote structured incident reports: summary, timeline, indicators of compromise, and remediation steps.</p></div>
+                  <div class="finding"><div class="finding-icon">🔄</div><p>Treated documentation as a deliverable — a finding not written up clearly doesn't help the next analyst.</p></div>
+                </div>
+                <span class="case-section-label">Skills Demonstrated</span>
+                <div class="skills-row">
+                  <span class="skill-chip">Alert Triage</span>
+                  <span class="skill-chip">Prioritization</span>
+                  <span class="skill-chip">Ticketing Workflows</span>
+                  <span class="skill-chip">Incident Reporting</span>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 003 -->
+      <article class="case-card" id="case-003">
+        <div class="case-inner">
+          <div class="case-bar bar-amber"></div>
+          <div class="case-body">
+            <details>
+              <summary class="case-summary">
+                <div class="case-left">
+                  <div class="case-meta">
+                    <span class="case-id">CASE-003</span>
+                    <span class="case-badge badge-amber">Network Forensics</span>
+                  </div>
+                  <h3>Network Traffic &amp; Packet Analysis</h3>
+                  <p class="case-desc">Built the habit of reading raw network traffic instead of trusting summaries — because most SOC tools eventually point back to "go look at the packets."</p>
+                </div>
+                <span class="case-toggle">See Details <span class="toggle-icon">▾</span></span>
+              </summary>
+              <div class="case-details-body">
+                <span class="case-section-label">Tools Used</span>
+                <div class="tools-row">
+                  <span class="tool-tag">Wireshark</span>
+                  <span class="tool-tag">PCAP Analysis</span>
+                  <span class="tool-tag">Protocol Filters</span>
+                  <span class="tool-tag">TCP Stream Reconstruction</span>
+                </div>
+                <span class="case-section-label">What I Did</span>
+                <div class="findings-grid">
+                  <div class="finding"><div class="finding-icon">📡</div><p>Captured and analyzed live and saved traffic, reading the protocol hierarchy before drilling into individual frames.</p></div>
+                  <div class="finding"><div class="finding-icon">🔎</div><p>Used display filters to isolate specific conversations — unexpected ports, plaintext credentials, repeated attempts.</p></div>
+                  <div class="finding"><div class="finding-icon">🔗</div><p>Followed TCP streams end-to-end to reconstruct what happened in a session, not just that something happened.</p></div>
+                  <div class="finding"><div class="finding-icon">📈</div><p>Compared baseline "normal" traffic against anomalous captures to build instinct for what should draw attention.</p></div>
+                </div>
+                <span class="case-section-label">Skills Demonstrated</span>
+                <div class="skills-row">
+                  <span class="skill-chip">Packet Analysis</span>
+                  <span class="skill-chip">Wireshark Filters</span>
+                  <span class="skill-chip">Traffic Baselining</span>
+                  <span class="skill-chip">Anomaly Identification</span>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </article>
+
+      <!-- CASE 004 -->
+      <article class="case-card" id="case-004">
+        <div class="case-inner">
+          <div class="case-bar bar-red"></div>
+          <div class="case-body">
+            <details>
+              <summary class="case-summary">
+                <div class="case-left">
+                  <div class="case-meta">
+                    <span class="case-id">CASE-004</span>
+                    <span class="case-badge badge-red">Adversary Intelligence</span>
+                  </div>
+                  <h3>Honeypot Deployment &amp; Threat Intelligence</h3>
+                  <p class="case-desc">Got an unfiltered look at what automated attackers actually do — by giving them something to attack inside a safely isolated home lab.</p>
+                </div>
+                <span class="case-toggle">See Details <span class="toggle-icon">▾</span></span>
+              </summary>
+              <div class="case-details-body">
+                <span class="case-section-label">Tools Used</span>
+                <div class="tools-row">
+                  <span class="tool-tag">Kali Linux</span>
+                  <span class="tool-tag">[Honeypot tool]</span>
+                  <span class="tool-tag">Network Segmentation</span>
+                  <span class="tool-tag">Log Analysis</span>
+                </div>
+                <span class="case-section-label">What I Did</span>
+                <div class="findings-grid">
+                  <div class="finding"><div class="finding-icon">🏗️</div><p>Built and isolated a home lab network segment so the honeypot could be exposed without putting other devices at risk.</p></div>
+                  <div class="finding"><div class="finding-icon">🍯</div><p>Deployed a honeypot on Kali Linux to passively log connection attempts, credentials tried, and commands run.</p></div>
+                  <div class="finding"><div class="finding-icon">📋</div><p>Reviewed logs for patterns — common usernames and passwords attempted, scanning behavior, and follow-on actions.</p></div>
+                  <div class="finding"><div class="finding-icon">🔗</div><p>Cross-referenced honeypot activity with Wireshark captures to connect app-layer logs with wire-level traffic.</p></div>
+                </div>
+                <span class="case-section-label">Skills Demonstrated</span>
+                <div class="skills-row">
+                  <span class="skill-chip">Honeypot Config</span>
+                  <span class="skill-chip">Network Segmentation</span>
+                  <span class="skill-chip">Log Analysis</span>
+                  <span class="skill-chip">Attacker TTP Identification</span>
+                </div>
+              </div>
+            </details>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── TIMELINE ── -->
+<section class="section section-surface" id="timeline">
+  <div class="wrap">
+    <span class="section-label">How I Trained</span>
+    <h2 class="section-heading">15-Day Program Timeline</h2>
+    <p class="section-sub">How I structured the sprint — from environment setup to final portfolio documentation.</p>
+    <div class="timeline-wrap">
+      <div class="tl-card"><div class="tl-step">1</div><div class="tl-content"><div class="tl-day">Day 1–2</div><h4>Foundations</h4><p>Cybersecurity landscape orientation and home lab environment setup.</p></div></div>
+      <div class="tl-card"><div class="tl-step">2</div><div class="tl-content"><div class="tl-day">Day 3–6</div><h4>SIEM Monitoring</h4><p>Splunk setup, BOTSv2 ingestion, SPL practice, dashboard build and demo.</p></div></div>
+      <div class="tl-card"><div class="tl-step">3</div><div class="tl-content"><div class="tl-day">Day 7–9</div><h4>Network Forensics</h4><p>Wireshark capture and filter practice, baseline vs. anomaly comparison.</p></div></div>
+      <div class="tl-card"><div class="tl-step">4</div><div class="tl-content"><div class="tl-day">Day 10–12</div><h4>Adversary Lab</h4><p>Kali Linux honeypot deployment, isolation, and live attack log collection.</p></div></div>
+      <div class="tl-card"><div class="tl-step">5</div><div class="tl-content"><div class="tl-day">Day 13–14</div><h4>Incident Response</h4><p>Ticketing workflow, alert triage practice, and incident report writing.</p></div></div>
+      <div class="tl-card"><div class="tl-step">6</div><div class="tl-content"><div class="tl-day">Day 15</div><h4>Wrap-Up &amp; Portfolio</h4><p>Portfolio documentation, demo rehearsal, and lessons-learned review.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section class="section section-white" id="skills">
+  <div class="wrap">
+    <span class="section-label">By Category</span>
+    <h2 class="section-heading">Skill Set</h2>
+    <p class="section-sub">Every skill listed here was practiced hands-on during the 15-day lab — not just read about.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:var(--blue-light)">📊</div>
+        <h4>Detection &amp; Monitoring</h4>
+        <div class="tag-wrap">
+          <span class="tag">Splunk</span><span class="tag">SPL</span><span class="tag">Dashboard Design</span><span class="tag">Log Correlation</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:var(--amber-light)">🔬</div>
+        <h4>Network Forensics</h4>
+        <div class="tag-wrap">
+          <span class="tag">Wireshark</span><span class="tag">Protocol Analysis</span><span class="tag">PCAP Review</span><span class="tag">TCP Stream Reconstruction</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:var(--red-light)">🐧</div>
+        <h4>Lab &amp; Linux Operations</h4>
+        <div class="tag-wrap">
+          <span class="tag">Kali Linux</span><span class="tag">Honeypot Deployment</span><span class="tag">Network Segmentation</span><span class="tag">Linux CLI</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:var(--green-light)">📋</div>
+        <h4>Incident Response &amp; Communication</h4>
+        <div class="tag-wrap">
+          <span class="tag">Alert Triage</span><span class="tag">Ticketing</span><span class="tag">Incident Reports</span><span class="tag">Stakeholder Demos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="section section-surface" id="contact" style="border-bottom:none;">
+  <div class="wrap">
+    <span class="section-label">Get in Touch</span>
+    <h2 class="section-heading">Let's Connect</h2>
+    <div class="contact-grid">
+      <div class="contact-copy">
+        <h3>I'm actively looking for my first SOC role.</h3>
+        <p>Whether you're a recruiter, hiring manager, or fellow security learner — I'd love to hear from you. I'm open to entry-level SOC Analyst and IT Support positions, both in Cebu and remotely.</p>
+        <p>I typically respond within 24 hours via email or LinkedIn.</p>
+        <div class="open-pill">Open to new opportunities</div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-header">
+          <strong>Romil Ganoza</strong>
+          <p>Entry-Level SOC Analyst · IT Support</p>
+        </div>
+        <div class="contact-rows">
+          <div class="contact-row">
+            <div class="contact-row-icon" style="background:var(--blue-light)">📧</div>
+            <div class="contact-row-text">
+              <div class="contact-row-label">Email</div>
+              <div class="contact-row-val"><a href="mailto:rganoza24@gmail.com">rganoza24@gmail.com</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-row-icon" style="background:var(--blue-light)">💼</div>
+            <div class="contact-row-text">
+              <div class="contact-row-label">LinkedIn</div>
+              <div class="contact-row-val"><a href="https://www.linkedin.com/in/romil-ganoza-0460b5321/" target="_blank" rel="noopener">linkedin.com/in/romil-ganoza-0460b5321</a></div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-row-icon" style="background:var(--green-light)">📍</div>
+            <div class="contact-row-text">
+              <div class="contact-row-label">Location</div>
+              <div class="contact-row-val">Mactan, Lapu-Lapu City, Cebu 🇵🇭</div>
+            </div>
+          </div>
+          <div class="contact-row">
+            <div class="contact-row-icon" style="background:var(--green-light)">🎯</div>
+            <div class="contact-row-text">
+              <div class="contact-row-label">Target Role</div>
+              <div class="contact-row-val">Entry-Level SOC Analyst · IT Support</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-name">Romil Ganoza</div>
+      <div class="footer-links">
+        <a href="mailto:rganoza24@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/romil-ganoza-0460b5321/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="#top">Back to Top ↑</a>
+      </div>
+      <div class="footer-copy">© 2026 Romil Ganoza · 15-Day SOC Training Lab Portfolio</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<a class="back-top" href="#top" id="backTop" aria-label="Back to top">↑</a>
+
+<script>
+(function () {
+  // ── Reduced motion check
+  var rm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Scroll progress bar
+  var progress = document.getElementById('progress');
+  function updateProgress() {
+    var scrolled = window.scrollY;
+    var total = document.documentElement.scrollHeight - window.innerHeight;
+    progress.style.width = total > 0 ? (scrolled / total * 100) + '%' : '0%';
+  }
+
+  // ── Back to top button
+  var backTop = document.getElementById('backTop');
+  function updateBackTop() {
+    if (window.scrollY > 400) backTop.classList.add('show');
+    else backTop.classList.remove('show');
+  }
+
+  // ── Active nav link highlighting
+  var sections = document.querySelectorAll('section[id], header[id]');
+  var navLinks = document.querySelectorAll('[data-nav]');
+  function updateActiveNav() {
+    var scrollY = window.scrollY + 100;
+    sections.forEach(function (sec) {
+      var top = sec.offsetTop;
+      var bottom = top + sec.offsetHeight;
+      var id = sec.getAttribute('id');
+      navLinks.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === '#' + id) {
+          if (scrollY >= top && scrollY < bottom) link.classList.add('active');
+          else link.classList.remove('active');
+        }
+      });
+    });
+  }
+
+  window.addEventListener('scroll', function () {
+    updateProgress();
+    updateBackTop();
+    updateActiveNav();
+  }, { passive: true });
+
+  // ── Scroll-triggered reveal
+  var revealEls = document.querySelectorAll('.case-card, .tl-card');
+  if (rm || !('IntersectionObserver' in window)) {
+    revealEls.forEach(function (el) { el.classList.add('visible'); });
+  } else {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    revealEls.forEach(function (el) { observer.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
